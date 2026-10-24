@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/verify.mjs)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push -u origin *)",
+      "Read(./**)",
+      "Edit(./index.html)",
+      "Edit(./CLAUDE.md)",
+      "Edit(./notes/**)",
+      "Edit(./.claude/**)",
+      "Edit(./scripts/**)"
+    ],
+    "deny": [
+      "Bash(git push * main)",
+      "Bash(git push --force*)",
+      "Bash(rm -rf *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "bash .claude/hooks/post-edit-verify.sh", "timeout": 60 }
+        ]
+      }
+    ]
+  }
+}
